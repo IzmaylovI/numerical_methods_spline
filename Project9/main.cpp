@@ -10,18 +10,27 @@
 using namespace std;
 using json = nlohmann::json;
 
-#define PI  3,1415926535 8979323846
 
+int main(int argc, char* argv[]) {
 
-int main() {
-
-    std::ifstream l("list.json");
+    std::ifstream l;
+    if (argc > 1)
+    {
+        l.open(argv[1]);
+    }
+    else
+    {
+        l.open("list.json");
+    }
     json data = json::parse(l);
+    l.close();
 
-    int var = data["variant"];
-    int grid_dim = data["grid_dimension"];
-    double mu1 = data["mu1"];
-    double mu2 = data["mu2"];
+    
+
+    int var = data.at("func_id");
+    int grid_dim = data.at("n");
+    double mu1 = data.at("M1");
+    double mu2 = data.at("M2");
 
     int N = 3 * grid_dim - 2;
 
@@ -97,13 +106,47 @@ int main() {
     }
     
     
-    spline_pr(grid_dim, N, mu1, mu2, X_control, S_control, S_control_pr1, S_control_pr2, a, b, c, d);
+    spline_pr(grid_dim, N, mu1, mu2, X_control, 
+        S_control, S_control_pr1, S_control_pr2, a, b, c, d);
     
-    Table1(grid_dim, X, a, b, c, d);
-    Table2(N, X_control, Y_control, Y_control_pr1, Y_control_pr2, S_control, S_control_pr1, S_control_pr2);
+    std::ofstream out;
+    if (argc > 2)
+    {
+        out.open(argv[2]);
+    }
+    else
+    {
+        out.open("Table_1.csv");
+    }
+
+    if (!out.is_open())
+    {
+        throw std::exception();
+    }
+
+    Table1(out, grid_dim, X, a, b, c, d);
+
+    out.close();
+
+    if (argc > 3)
+    {
+        out.open(argv[3]);
+    }
+    else
+    {
+        out.open("Table_2.csv");
+    }
+
+    if (!out.is_open())
+    {
+        throw std::exception();
+    }
 
 
+    Table2(out, N, X_control, Y_control, Y_control_pr1, Y_control_pr2, 
+        S_control, S_control_pr1, S_control_pr2);
 
+    out.close();
 
 
     //std::cout << 0 << std::endl;

@@ -1,6 +1,6 @@
 {
-  "variant": 6,
-  "grid_dimension": 10,
-  "mu1": 0,
-  "mu2": 0
+  "func_id": 0,
+  "M1": 0,
+  "M2": 0,
+  "n": 10
 }
