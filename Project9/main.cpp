@@ -42,6 +42,14 @@ int main(int argc, char* argv[]) {
     double S_Y_pr1_error = 0;
     double S_Y_pr2_error = 0;
 
+    int X1 = 0;
+    int X2 = 0;
+    int X3 = 0;
+
+    double X_error1;
+    double X_error2;
+    double X_error3;
+        
     double* a = new double[grid_dim - 1];
     double* b = new double[grid_dim - 1];
     double* c = new double[grid_dim];
@@ -110,7 +118,11 @@ int main(int argc, char* argv[]) {
     spline_pr(grid_dim, N, mu1, mu2, X_control, 
         S_control, S_control_pr1, S_control_pr2, a, b, c, d);
 
-    error(N, Y_control, Y_control_pr1, Y_control_pr2, S_control, S_control_pr1, S_control_pr2, S_Y_error, S_Y_pr1_error, S_Y_pr2_error);
+    error(N, Y_control, Y_control_pr1, Y_control_pr2, S_control, S_control_pr1, S_control_pr2, S_Y_error, S_Y_pr1_error, S_Y_pr2_error, X1, X2, X3);
+
+    X_error1 = X_control[X1];
+    X_error2 = X_control[X2];
+    X_error3 = X_control[X3];
     
     std::ofstream out;
     if (argc > 2)
@@ -164,7 +176,7 @@ int main(int argc, char* argv[]) {
         throw std::exception();
     }
 
-    Directory(out, grid_dim, N, S_Y_error, S_Y_pr1_error, S_Y_pr2_error);
+    Directory(out, grid_dim, N, S_Y_error, S_Y_pr1_error, S_Y_pr2_error, X_error1, X_error2, X_error3);
     
     out.close();
 

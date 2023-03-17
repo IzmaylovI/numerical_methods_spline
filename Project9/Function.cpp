@@ -427,13 +427,19 @@ void spline_pr(int grid_dim, int N, int mu1, int mu2, double* X_control, double*
     S_control_pr2[N - 1] = mu2;
 }
 
-void error(int N, double* Y_control, double* Y_control_pr1, double* Y_control_pr2, double* S_control, double* S_control_pr1, double* S_control_pr2, double& S_Y_error, double& S_Y_pr1_error, double& S_Y_pr2_error) {
+void error(int N, double* Y_control, double* Y_control_pr1, double* Y_control_pr2, double* S_control, double* S_control_pr1, double* S_control_pr2, double& S_Y_error, double& S_Y_pr1_error, double& S_Y_pr2_error, int& X1, int& X2, int& X3) {
     for (int i = 0; i < N; ++i) {
-        if (abs(Y_control[i] - S_control[i]) > S_Y_error)
+        if (abs(Y_control[i] - S_control[i]) > S_Y_error) {
             S_Y_error = abs(Y_control[i] - S_control[i]);
-        if (abs(Y_control_pr1[i] - S_control_pr1[i]) > S_Y_pr1_error)
+            X1 = i;
+        }
+        if (abs(Y_control_pr1[i] - S_control_pr1[i]) > S_Y_pr1_error) {
             S_Y_pr1_error = abs(Y_control_pr1[i] - S_control_pr1[i]);
-        if (abs(Y_control_pr2[i] - S_control_pr2[i] > S_Y_pr2_error))
+            X2 = i;
+        }
+        if (abs(Y_control_pr2[i] - S_control_pr2[i] > S_Y_pr2_error)) {
             S_Y_pr2_error = abs(Y_control_pr2[i] - S_control_pr2[i]);
+            X3 = i;
+        }
     }
 }
