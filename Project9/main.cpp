@@ -29,6 +29,7 @@ int main(int argc, char* argv[]) {
 
     int var = data.at("func_id");
     int grid_dim = data.at("n");
+    grid_dim++;
     double mu1 = data.at("M1");
     double mu2 = data.at("M2");
 

@@ -7,7 +7,7 @@ void Table1(std::ofstream& out, int grid_dim, double* X,
     //Table1 << "i, X(i-1), X(i), a(i), b(i), c(i), d(i)\n";
 
     for (int i = 0; i < grid_dim - 1; i++) {
-        out << i + 1 << ',' << X[i + 1] << ',' << X[i] << ',' << a[i] << ',' << b[i] << ',' << c[i + 1] << ',' << d[i] << "\n";
+        out << i + 1 << ',' << X[i] << ',' << X[i + 1] << ',' << a[i] << ',' << b[i] << ',' << c[i + 1] << ',' << d[i] << "\n";
     }
 }
 
@@ -19,7 +19,6 @@ void Table2(std::ofstream& out, int N, double* X_control, double* Y_control,
 
     for (int i = 0; i < N; i++) {
         out << i << ',' << X_control[i] << ',' << Y_control[i] << ',' << S_control[i] << ',' << Y_control[i] - S_control[i] << ','
-            << Y_control_pr1[i] << ',' << S_control_pr1[i] << ',' << Y_control_pr1[i] - S_control_pr1[i] << ','
-            << Y_control_pr2[i] << ',' << S_control_pr2[i] << ',' << Y_control_pr2[i] - S_control_pr2[i] << '\n';
+            << Y_control_pr1[i] << ',' << S_control_pr1[i] << ',' << Y_control_pr1[i] - S_control_pr1[i] << '\n';
     }
 }
