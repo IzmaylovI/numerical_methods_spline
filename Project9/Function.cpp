@@ -196,7 +196,7 @@ void get_function(int var, int grid_dim, double& step, double* X, double* Y) {
         }
 
         for (int i = 0; i < grid_dim; ++i) {
-            Y[i] = log(X[i] + 1) / X[i] + cos(10);
+            Y[i] = log(X[i] + 1) / X[i] + cos(10 * X[i]);
         }
 
         break;
@@ -213,7 +213,7 @@ void get_function(int var, int grid_dim, double& step, double* X, double* Y) {
         }
 
         for (int i = 0; i < grid_dim; ++i) {
-            Y[i] = sin(X[i] + 1) / X[i] + cos(10);
+            Y[i] = sin(X[i] + 1) / X[i] + cos(10 * X[i]);
         }
 
         break;
@@ -230,7 +230,7 @@ void get_function(int var, int grid_dim, double& step, double* X, double* Y) {
         }
 
         for (int i = 0; i < grid_dim; ++i) {
-            Y[i] = (sin(X[i]) * sin(X[i])) / X[i] + cos(10);
+            Y[i] = (sin(X[i]) * sin(X[i])) / X[i] + cos(10 * X[i]);
         }
 
         break;
@@ -247,7 +247,7 @@ void get_function(int var, int grid_dim, double& step, double* X, double* Y) {
         }
 
         for (int i = 0; i < grid_dim; ++i) {
-            Y[i] = X[i] * sin(X[i]) / 3 + cos(10);
+            Y[i] = X[i] * sin(X[i]) / 3 + cos(10 * X[i]);
         }
 
         break;
@@ -321,6 +321,7 @@ void var2_pr(int N, double step2, double* X_control, double* Y_control, double* 
         Y_control_pr1[i] = (X_control[i] * cos(X_control[i] + 1) - sin(X_control[i] + 1)) / (X_control[i] * X_control[i]);
 
         Y_control_pr2[i] = -((X_control[i] * X_control[i] - 2) * sin(X_control[i] + 1) + 2 * X_control[i] * cos(X_control[i] + 1)) / (X_control[i] * X_control[i] * X_control[i]);
+
     }
 }
 
@@ -329,9 +330,9 @@ void var3_pr(int N, double step2, double* X_control, double* Y_control, double* 
         X_control[i] = 1 + step2 * i;
 
     for (int i = 0; i < N; i++) {
-        Y_control[i] = sin(X_control[i] * X_control[i]) / X_control[i];
+        Y_control[i] = sin(X_control[i]) * sin(X_control[i]) / X_control[i];
 
-        Y_control_pr1[i] = sin(X_control[i] * 2) * X_control[i] - sin(X_control[i]) * sin(X_control[i]);
+        Y_control_pr1[i] = (sin(X_control[i] * 2) * X_control[i] - sin(X_control[i]) * sin(X_control[i]))/(X_control[i] * X_control[i]);
 
         Y_control_pr2[i] = -(2 * X_control[i] * sin(2 * X_control[i]) - 2 * X_control[i] * X_control[i] * cos(2 * X_control[i]) - 2 * sin(X_control[i]) * sin(X_control[i])) / (X_control[i] * X_control[i] * X_control[i]);
     }
@@ -355,11 +356,11 @@ void var5_pr(int N, double step2, double* X_control, double* Y_control, double* 
         X_control[i] = 2 + step2 * i;
 
     for (int i = 0; i < N; i++) {
-        Y_control[i] = log(X_control[i] + 1) / X_control[i] + cos(10);
+        Y_control[i] = log(X_control[i] + 1) / X_control[i] + cos(10 * X_control[i]);
 
-        Y_control_pr1[i] = 1 / (X_control[i] + X_control[i] * X_control[i]) - log(X_control[i] + 1) / (X_control[i] * X_control[i]);
+        Y_control_pr1[i] = 1 / (X_control[i] + X_control[i] * X_control[i]) - log(X_control[i] + 1) / (X_control[i] * X_control[i]) - 10 * sin(10 * X_control[i]);
 
-        Y_control_pr2[i] = (-1 - 2 * X_control[i]) / ((X_control[i] + X_control[i] * X_control[i]) * (X_control[i] + X_control[i] * X_control[i])) - 1 / (X_control[i] * X_control[i] * (X_control[i] + 1)) + 2 * log(X_control[i] + 1) / (X_control[i] * X_control[i] * X_control[i]);
+        Y_control_pr2[i] = (-1 - 2 * X_control[i]) / ((X_control[i] + X_control[i] * X_control[i]) * (X_control[i] + X_control[i] * X_control[i])) - 1 / (X_control[i] * X_control[i] * (X_control[i] + 1)) + 2 * log(X_control[i] + 1) / (X_control[i] * X_control[i] * X_control[i]) - 100 * cos(10 * X_control[i]);
 
     }
 }
@@ -369,11 +370,11 @@ void var6_pr(int N, double step2, double* X_control, double* Y_control, double* 
         X_control[i] = 1 + step2 * i;
 
     for (int i = 0; i < N; i++) {
-        Y_control[i] = sin(X_control[i] + 1) / X_control[i] + cos(10);
+        Y_control[i] = sin(X_control[i] + 1) / X_control[i] + cos(10 * X_control[i]);
 
-        Y_control_pr1[i] = (X_control[i] * cos(X_control[i] + 1) - sin(X_control[i] + 1)) / (X_control[i] * X_control[i]);
+        Y_control_pr1[i] = (X_control[i] * cos(X_control[i] + 1) - sin(X_control[i] + 1)) / (X_control[i] * X_control[i]) - 10 * sin(10 * X_control[i]);
 
-        Y_control_pr2[i] = -((X_control[i] * X_control[i] - 2) * sin(X_control[i] + 1) + 2 * X_control[i] * cos(X_control[i] + 1)) / (X_control[i] * X_control[i] * X_control[i]);
+        Y_control_pr2[i] = -((X_control[i] * X_control[i] - 2) * sin(X_control[i] + 1) + 2 * X_control[i] * cos(X_control[i] + 1)) / (X_control[i] * X_control[i] * X_control[i]) - 100 * cos(10 * X_control[i]);
     }
 }
 
@@ -382,11 +383,11 @@ void var7_pr(int N, double step2, double* X_control, double* Y_control, double* 
         X_control[i] = 1 + step2 * i;
 
     for (int i = 0; i < N; i++) {
-        Y_control[i] = sin(X_control[i] * X_control[i]) / X_control[i] + cos(10);
+        Y_control[i] = sin(X_control[i]) * sin(X_control[i]) / X_control[i] + cos(10 * X_control[i]);
 
-        Y_control_pr1[i] = sin(X_control[i] * 2) * X_control[i] - sin(X_control[i]) * sin(X_control[i]);
+        Y_control_pr1[i] = (sin(X_control[i] * 2) * X_control[i] - sin(X_control[i]) * sin(X_control[i])) / (X_control[i] * X_control[i]) - 10 * sin(10 * X_control[i]);
 
-        Y_control_pr2[i] = -(2 * X_control[i] * sin(2 * X_control[i]) - 2 * X_control[i] * X_control[i] * cos(2 * X_control[i]) - 2 * sin(X_control[i]) * sin(X_control[i])) / (X_control[i] * X_control[i] * X_control[i]);
+        Y_control_pr2[i] = -(2 * X_control[i] * sin(2 * X_control[i]) - 2 * X_control[i] * X_control[i] * cos(2 * X_control[i]) - 2 * sin(X_control[i]) * sin(X_control[i])) / (X_control[i] * X_control[i] * X_control[i]) - 100 * cos(10 * X_control[i]);
     }
 }
 
@@ -395,11 +396,11 @@ void var8_pr(int N, double step2, double* X_control, double* Y_control, double* 
         X_control[i] = 0 + step2 * i;
 
     for (int i = 0; i < N; i++) {
-        Y_control[i] = X_control[i] * sin(X_control[i]) / 3 + cos(10);
+        Y_control[i] = X_control[i] * sin(X_control[i]) / 3 + cos(10 * X_control[i]);
 
-        Y_control_pr1[i] = (sin(X_control[i]) + X_control[i] * cos(X_control[i])) / 3;
+        Y_control_pr1[i] = (sin(X_control[i]) + X_control[i] * cos(X_control[i])) / 3 - 10 * sin(10 * X_control[i]);
 
-        Y_control_pr2[i] = (2 * cos(X_control[i]) - X_control[i] * sin(X_control[i])) / 3;
+        Y_control_pr2[i] = (2 * cos(X_control[i]) - X_control[i] * sin(X_control[i])) / 3 - 100 * cos(10 * X_control[i]);
     }
 }
 
@@ -424,5 +425,15 @@ void spline_pr(int grid_dim, int N, int mu1, int mu2, double* X_control, double*
             S_control_pr2[i * 3 + j] = c[i + 1] + d[i] * (X_control[i * 3 + j] - X_control[(i + 1) * 3]);
     }
     S_control_pr2[N - 1] = mu2;
-    
+}
+
+void error(int N, double* Y_control, double* Y_control_pr1, double* Y_control_pr2, double* S_control, double* S_control_pr1, double* S_control_pr2, double& S_Y_error, double& S_Y_pr1_error, double& S_Y_pr2_error) {
+    for (int i = 0; i < N; ++i) {
+        if (abs(Y_control[i] - S_control[i]) > S_Y_error)
+            S_Y_error = abs(Y_control[i] - S_control[i]);
+        if (abs(Y_control_pr1[i] - S_control_pr1[i]) > S_Y_pr1_error)
+            S_Y_pr1_error = abs(Y_control_pr1[i] - S_control_pr1[i]);
+        if (abs(Y_control_pr2[i] - S_control_pr2[i] > S_Y_pr2_error))
+            S_Y_pr2_error = abs(Y_control_pr2[i] - S_control_pr2[i]);
+    }
 }

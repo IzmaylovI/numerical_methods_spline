@@ -19,3 +19,5 @@ void var5_pr(int N, double step2, double* X_control, double* Y_control, double* 
 void var6_pr(int N, double step2, double* X_control, double* Y_control, double* Y_control_pr1, double* Y_control_pr2);
 void var7_pr(int N, double step2, double* X_control, double* Y_control, double* Y_control_pr1, double* Y_control_pr2);
 void var8_pr(int N, double step2, double* X_control, double* Y_control, double* Y_control_pr1, double* Y_control_pr2);
+
+void error(int N, double* Y_control, double* Y_control_pr1, double* Y_control_pr2, double* S_control, double* S_control_pr1, double* S_control_pr2, double& S_Y_error, double& S_Y_pr1_error, double& S_Y_pr2_error);

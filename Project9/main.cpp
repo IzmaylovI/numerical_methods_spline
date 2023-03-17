@@ -38,9 +38,9 @@ int main(int argc, char* argv[]) {
     double step;
     double step2;
 
-    double S_Y_error = -1;
-    double S_Y_pr1_error = -1;
-    double S_Y_pr2_error = -1;
+    double S_Y_error = 0;
+    double S_Y_pr1_error = 0;
+    double S_Y_pr2_error = 0;
 
     double* a = new double[grid_dim - 1];
     double* b = new double[grid_dim - 1];
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
 
     switch (var) {
     case 0: {
-        test_pr(N, step2,X_control,Y_control,Y_control_pr1,Y_control_pr2);
+        test_pr(N, step2, X_control, Y_control, Y_control_pr1, Y_control_pr2);
         break;
     }
     case 1: {
@@ -109,6 +109,8 @@ int main(int argc, char* argv[]) {
     
     spline_pr(grid_dim, N, mu1, mu2, X_control, 
         S_control, S_control_pr1, S_control_pr2, a, b, c, d);
+
+    error(N, Y_control, Y_control_pr1, Y_control_pr2, S_control, S_control_pr1, S_control_pr2, S_Y_error, S_Y_pr1_error, S_Y_pr2_error);
     
     std::ofstream out;
     if (argc > 2)
@@ -147,8 +149,24 @@ int main(int argc, char* argv[]) {
     Table2(out, N, X_control, Y_control, Y_control_pr1, Y_control_pr2, 
         S_control, S_control_pr1, S_control_pr2);
 
+
+
     out.close();
 
+    if (argc > 4) {
+        out.open(argv[4]);
+    }
+    else {
+        out.open("Directory.csv");
+    }
+
+    if (!out.is_open()) {
+        throw std::exception();
+    }
+
+    Directory(out, grid_dim, N, S_Y_error, S_Y_pr1_error, S_Y_pr2_error);
+    
+    out.close();
 
     //std::cout << 0 << std::endl;
     /*
@@ -175,7 +193,10 @@ int main(int argc, char* argv[]) {
         std::cout << c[i + 1] / 2 << " * (x-" << X[i + 1] << ")^2 + ";
         std::cout << d[i] / 6 << " * (x-" << X[i + 1] << ")^3" << std::endl;
     }
+
+    cout << S_Y_error << ' ' << S_Y_pr1_error << ' ' << S_Y_pr2_error << std::endl;
     */
+    
     
     
 

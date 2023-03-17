@@ -22,3 +22,9 @@ void Table2(std::ofstream& out, int N, double* X_control, double* Y_control,
             << Y_control_pr1[i] << ',' << S_control_pr1[i] << ',' << Y_control_pr1[i] - S_control_pr1[i] << '\n';
     }
 }
+
+void Directory(std::ofstream& out, double grid_dim, int N, double S_Y_error, double S_Y_pr1_error, double S_Y_pr2_error) {
+    
+    out << grid_dim << ',' << N << ',' << S_Y_error << ','
+        << S_Y_pr1_error << ',' << S_Y_pr2_error;
+}
